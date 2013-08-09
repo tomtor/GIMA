@@ -15,10 +15,24 @@ try:
     ver = cur.fetchone()
     print ver    
 
-    cur = con.cursor()
-  
+    cur.execute("DROP TABLE documenten")
     cur.execute("CREATE TABLE documenten(id INT PRIMARY KEY, lexemes tsvector, bron varchar(100))")
-    cur.execute("INSERT INTO documenten VALUES(0, to_tsvector('Voorbeeld tekst'), 'demo')")
+    #cur.execute("INSERT INTO documenten VALUES(0, to_tsvector('dutch', 'Voorbeeld tekst'), 'demo')")
+
+    id = 0
+    doc = ''
+    f = open('data/geboorte.txt', 'r')
+    for line in f:
+        if len(line) == 1:
+            id = id + 1
+	    doc = doc.translate(None, '"\'')
+            print doc
+            cur.execute("INSERT INTO documenten VALUES(" + str(id) \
+                + ", to_tsvector('dutch', '" + doc + "'), 'demo')")
+            doc = ''
+        else:
+            doc = doc + line
+    f.close()
     
     con.commit()
     
