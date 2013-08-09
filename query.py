@@ -18,8 +18,9 @@ try:
     while True:
         q = raw_input("\nEnter query: ")
         cur.execute("SELECT * FROM documenten where lexemes @@ to_tsquery('dutch', '" + q + "')")
-        doc = cur.fetchone()
-        print doc
+        rows= cur.fetchall()
+        for doc in rows:
+            print doc
     
 except psycopg2.DatabaseError, e:
     print 'Error %s' % e    
