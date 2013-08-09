@@ -14,6 +14,13 @@ try:
     cur.execute('SELECT version()')          
     ver = cur.fetchone()
     print ver    
+
+    cur = con.cursor()
+  
+    cur.execute("CREATE TABLE documenten(id INT PRIMARY KEY, lexemes tsvector, bron varchar(100))")
+    cur.execute("INSERT INTO documenten VALUES(0, to_tsvector('Voorbeeld tekst'), 'demo')")
+    
+    con.commit()
     
 
 except psycopg2.DatabaseError, e:
