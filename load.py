@@ -16,8 +16,8 @@ try:
     print ver    
 
     cur.execute("DROP TABLE documenten")
-    cur.execute("CREATE TABLE documenten(id INT PRIMARY KEY, lexemes tsvector, bron varchar(100))")
-    #cur.execute("INSERT INTO documenten VALUES(0, to_tsvector('dutch', 'Voorbeeld tekst'), 'demo')")
+    cur.execute("CREATE TABLE documenten(id INT PRIMARY KEY, lexemes tsvector, doc text, bron varchar(100))")
+    #cur.execute("INSERT INTO documenten VALUES(0, to_tsvector('dutch', 'Voorbeeld tekst'), 'Voorbeeld tekst', 'demo')")
 
     id = 0
     doc = ''
@@ -28,7 +28,7 @@ try:
 	    doc = doc.translate(None, '"\'')
             print doc
             cur.execute("INSERT INTO documenten VALUES(" + str(id) \
-                + ", to_tsvector('dutch', '" + doc + "'), 'demo')")
+                + ", to_tsvector('dutch', '" + doc + "'), '" + doc + "', 'demo')")
             doc = ''
         else:
             doc = doc + line
