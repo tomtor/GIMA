@@ -29,7 +29,7 @@ try:
         con.commit()
     f.close()
 
-    cur.execute("CREATE INDEX documenten_idx ON documenten USING gin(to_tsvector('dutch', 'lexemes'))")
+    cur.execute("CREATE INDEX documenten_idx ON documenten USING gin(to_tsvector('dutch', doc))")
     con.commit()
 
     con.set_isolation_level(0)
