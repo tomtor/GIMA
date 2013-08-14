@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# This is a Python 3 script!
+
 from pymongo import MongoClient
 import sys
 
