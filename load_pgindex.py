@@ -20,14 +20,14 @@ try:
         if len(line) == 1:
             doc = doc.translate(str.maketrans('', '', '"\''))
             print(doc)
-            cur.execute("INSERT INTO documenten(lexemes,doc,bron) VALUES(" \
-                + "to_tsvector('dutch', '" + doc + "'), '" + doc + "', 'demo')")
+            for i in range(0, 1000):
+                cur.execute("INSERT INTO documenten(lexemes,doc,bron) VALUES(" \
+                    + "to_tsvector('dutch', '" + doc + "'), '" + doc + "', 'demo')")
             doc = ''
         else:
             doc = doc + line
+        con.commit()
     f.close()
-    
-    con.commit()
 
     cur.execute("CREATE INDEX documenten_idx ON documenten USING gin(to_tsvector('dutch', 'lexemes'))")
     con.commit()
