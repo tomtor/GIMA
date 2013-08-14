@@ -12,7 +12,7 @@ try:
     cur = con.cursor()
 
     cur.execute("DROP TABLE documenten")
-    cur.execute("CREATE TABLE documenten(id SERIAL PRIMARY KEY, lexemes TSVECTOR, doc TEXT, bron VARCHAR(100))")
+    cur.execute("CREATE TABLE documenten(id SERIAL PRIMARY KEY, doc TEXT, bron VARCHAR(100))")
 
     doc = ''
     f = open('data/geboorte.txt', 'r')
@@ -21,8 +21,8 @@ try:
             doc = doc.translate(str.maketrans('', '', '"\''))
             print(doc)
             for i in range(0, 1000):
-                cur.execute("INSERT INTO documenten(lexemes,doc,bron) VALUES(" \
-                    + "to_tsvector('dutch', '" + doc + "'), '" + doc + "', 'demo')")
+                cur.execute("INSERT INTO documenten(doc,bron) VALUES('" \
+                    + doc + "', 'demo')")
             doc = ''
         else:
             doc = doc + line
