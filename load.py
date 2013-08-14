@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 import psycopg2
@@ -25,7 +25,7 @@ try:
     for line in f:
         if len(line) == 1:
             id = id + 1
-	    doc = doc.translate(None, '"\'')
+            doc = doc.translate(None, '"\'')
             print doc
             cur.execute("INSERT INTO documenten VALUES(" + str(id) \
                 + ", to_tsvector('dutch', '" + doc + "'), '" + doc + "', 'demo')")
