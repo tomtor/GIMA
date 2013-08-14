@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# This is a Python 3 script!
+
 from pymongo import MongoClient
 import sys
 
@@ -13,18 +15,16 @@ try:
     coll = db.geboorte
 
     while True:
-        q = raw_input("\nEnter query: ")
-        ### work in progress, continue from this point
-        rows= cur.fetchall()
-        for doc in rows:
-            print doc
+        q = input("\nEnter query: ")
+        results = db.command('text', 'geboorte', search=q)
+        print(str(results['results']))
     
-except psycopg2.DatabaseError, e:
-    print 'Error %s' % e    
+except:
+    print('Error:', sys.exc_info()[0])
     sys.exit(1)
     
     
 finally:
     
-    if con:
-        con.close()
+    if client:
+        client.disconnect()
