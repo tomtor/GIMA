@@ -11,15 +11,18 @@ try:
     con = psycopg2.connect(database='gima', user='tom') 
     cur = con.cursor()
 
-    cur.execute("DROP TABLE documenten")
+    cur.execute("DROP TABLE IF EXISTS documenten")
     cur.execute("CREATE TABLE documenten(id SERIAL PRIMARY KEY, doc TEXT, bron VARCHAR(100))")
 
     doc = ''
+    count = 0
     f = open('data/geboorte.txt', 'r')
     for line in f:
         if len(line) == 1:
+            count = count + 1
             doc = doc.translate(str.maketrans('', '', '"\''))
-            print(doc)
+            #print(doc)
+            print(count)
             for i in range(0, 1000):
                 cur.execute("INSERT INTO documenten(doc,bron) VALUES('" \
                     + doc + "', 'demo')")

@@ -16,19 +16,22 @@ try:
     
     coll.drop()
 
-    id = 0
+    count = 0
     doc = ''
     f = open('data/geboorte.txt', 'r')
     for line in f:
         if len(line) == 1:
-            id = id + 1
-            #doc = doc.translate(None, '"\'')
-            print(id)
-            coll.insert({"tekst": doc, "bron": "demo"})
+            count = count + 1
+            print(count)
+            for i in range(0, 1000):
+                coll.insert({"tekst": doc, "bron": "demo"})
             doc = ''
         else:
             doc = doc + line
     f.close()
+
+    print("Build index...")
+    #db.geboorte.ensureIndex({"tekst": "text"}, {"default_language": "dutch"})
 
 except:
     print('Error:', sys.exc_info()[0])
@@ -39,4 +42,3 @@ finally:
     
     if client:
         client.disconnect()
-    print('Maak handmatig nog een index met dit commando: db.geboorte.ensureIndex({tekst: "text"}, {default_language: "dutch"})')
